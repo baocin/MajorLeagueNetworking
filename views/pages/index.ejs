@@ -17,6 +17,12 @@
             <p>Group 18 - Senior Project</p>
             <input type="text" value="Enter Query"/>
         </div>
+
+        <p>JSON:
+          <% if (typeof tweetResults != 'undefined') { %>
+             <%- JSON.stringify(tweetResults) %>
+          <% } %>
+        </p>
     </main>
 
 
