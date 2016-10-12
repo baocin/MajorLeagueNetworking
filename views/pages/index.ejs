@@ -20,6 +20,12 @@
 				<input type="submit" />
 			</form>
         </div>
+
+        <p>JSON:
+          <% if (typeof tweetResults != 'undefined') { %>
+             <%- JSON.stringify(tweetResults) %>
+          <% } %>
+        </p>
     </main>
 		
 
