@@ -18,8 +18,6 @@ def download(url):
     article = Article(url=url)		#, language='en'
     article.download()
     article.parse()
-    # article.nlp()
-    # + article.summary + article.keywords
     return article.text
 
 @app.route("/parse")
@@ -29,14 +27,17 @@ def parse():
 
 def parse(url):
     articleText = download(url)
-    tagged_sentences = ie_preprocess(articleText)
-    chunked_sentences = nltk.ne_chunk_sents(tagged_sentences, binary=True)
-    entity_names = []
-    for tree in chunked_sentences:
-        # Print results per sentence
-        # print(extract_entity_names(tree))
-        entity_names.extend(extract_entity_names(tree))
-    return str(entity_names)
+    tagger = StanfordNERTagger('stanford-ner/english.all.3class.nodistsim.crf.ser.gz', 'stanford-ner/stanford-ner.jar')
+    return str(tagger.tag(articleText.split()))
+
+    # tagged_sentences = ie_preprocess(articleText)
+    # chunked_sentences = nltk.ne_chunk_sents(tagged_sentences, binary=True)
+    # entity_names = []
+    # for tree in chunked_sentences:
+    #     # Print results per sentence
+    #     # print(extract_entity_names(tree))
+    #     entity_names.extend(extract_entity_names(tree))
+    # return str(entity_names)
 
 def ie_preprocess(document):
     sentences = nltk.sent_tokenize(document)
