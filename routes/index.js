@@ -1,13 +1,10 @@
 var express = require('express');
-var favicon = require('serve-favicon');
+//var favicon = require('serve-favicon');
+var router = express.Router();
 var twitter = require('twitter');
 
 //API Keys
-var api_keys = require('./api_keys.json')
-
-//Set up express js
-var app = express();
-app.set('view engine', 'ejs');
+var api_keys = require('../api_keys.json')
 
 //Setup Twitter api
 var client = new twitter({
@@ -17,20 +14,14 @@ var client = new twitter({
   access_token_secret: api_keys.Twitter.ACCESS_TOKEN_SECRET,
 });
 
-//Routing for static assets
-app.use('/static', express.static(__dirname + '/static'));
-
-//Redirect favicon to static directory
-app.use(favicon(__dirname + '/static/favicon.ico'));
-
 //Main website
 //Typical Example:    http://localhost:3000/
 //Example with query: http://localhost:3000/?topic=sports
-app.use('/', function(req, res) {
+router.get('/', function(req, res) {
     var topicQuery = req.query.topic || "";   //if undefined set to ""
 
     if (topicQuery == ""){            //No '?topic=whatever' in url
-      res.render('pages/index');      //Return default index page
+      res.render('index');      //Return default index page
       return;                         //Stop executing this request
     }
 
@@ -44,18 +35,12 @@ app.use('/', function(req, res) {
     getTweets(params).then(function(tweets){
       var tweetUrls = processTweets(tweets);
 
-      res.render('pages/index', {          //Render the index page
+      res.render('index', {          //Render the index page
           topic: topicQuery,               //our search query ex. 'sports'
           tweetResults: tweets,            //the json of the tweets
           count: tweets.statuses.length,   //how many tweet results
       });
     });
-});
-
-app.listen(3000, function() {
-    console.log('Listening on port 3000.');
-    console.log('URL: http://localhost:3000/');
-    console.log('JSON URL: http://localhost:3000/?topic=sports');
 });
 
 var getTweets = function(params){
@@ -84,3 +69,4 @@ var processTweets = function(tweets){
 
   return tweetUrls;
 }
+module.exports = router;
