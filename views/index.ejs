@@ -2,11 +2,11 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <% include ./partials/head %>
 </head>
 <body class="container">
-
     <header>
         <% include ./partials/header %>
     </header>
@@ -21,11 +21,33 @@
 			</form>
         </div>
 
-        <p>JSON:
+        <p>
           <% if (typeof tweetResults != 'undefined') { %>
-             <%- JSON.stringify(tweetResults) %>
+            <!--Commented out for now-->
+             <!--<%- JSON.stringify(tweetResults) %>-->
+             <table class ="table">
+               <tr>
+                   <th>Profile Image</th>
+                   <th>Tweet!</th>
+                   <th># of Retweet</th>
+                   <th># of times Favorited</th>
+                   <th>Language</th>
+                   <th>Profile Friend Count</th>
+                 </tr>
+             <% for(var i=0; i < tweetResults.statuses.length; i++) { %>
+               <tr>
+                 <td><img src=<%- tweetResults.statuses[i].user.profile_image_url_https %>/></td>
+                 <td> <%= tweetResults.statuses[i].text %></td>
+                 <td> <%= tweetResults.statuses[i].retweet_count %></td>
+                 <td> <%= tweetResults.statuses[i].favorite_count %></td>
+                 <td> <%= tweetResults.statuses[i].lang %></td>
+                 <td> <%= JSON.stringify(tweetResults.statuses[i].user.friends_count) %></td>
+               </tr>
+               <% } %>
+             </table>
           <% } %>
         </p>
+
     </main>
 
 
