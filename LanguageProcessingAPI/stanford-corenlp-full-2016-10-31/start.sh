@@ -15,4 +15,7 @@ fi
 echo "java -mx5g -cp "*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer 9000 999999"
 echo "If you get a out of memory error up -mx5g to -mx8g"
 java -mx5g -cp "*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer 9000 999999
-
+sleep(5)
+echo "Now running test execution (to preload language models)"
+wget --post-data 'The quick brown fox jumped over the lazy dog.' 
+'localhost:9000/?properties={"annotators":"tokenize,ssplit,pos","outputFormat":"json"}' -O -
