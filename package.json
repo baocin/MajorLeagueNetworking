@@ -1,0 +1,31 @@
+{
+  "name": "major_league_networking",
+  "version": "1.0.0",
+  "description": "A conversation aid for sports topics.",
+  "scripts": {
+    "start": "node ./bin/www",
+    "mon":"nodemon ./bin/www"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/baocin/MajorLeagueNetworking.git"
+  },
+  "author": "Michael Pedersen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/baocin/MajorLeagueNetworking/issues"
+  },
+  "homepage": "https://github.com/baocin/MajorLeagueNetworking#readme",
+  "dependencies": {
+    "body-parser": "~1.15.1",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.2.0",
+    "ejs": "^2.5.2",
+    "express": "^4.6.1",
+    "morgan": "~1.7.0",
+    "serve-favicon": "^2.3.0",
+    "twitter": "^1.4.0",
+    "nodemon": "1.11.0"
+  }
+}
+

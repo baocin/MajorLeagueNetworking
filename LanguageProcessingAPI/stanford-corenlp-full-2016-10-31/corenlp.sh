@@ -18,7 +18,5 @@ else
   scriptdir=$(dirname "$scriptpath")
 fi
 
-
 echo java -mx5g -cp \"$scriptdir/*\" edu.stanford.nlp.pipeline.StanfordCoreNLP $*
-echo "If you get a out of memory error up -mx5g to -mx8g"
 java -mx5g -cp "$scriptdir/*" edu.stanford.nlp.pipeline.StanfordCoreNLP $*
