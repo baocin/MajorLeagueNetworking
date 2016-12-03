@@ -28,13 +28,17 @@ def downloadText(url):
     return article.text
 
 def download(url):
+    print("Downloading " + url)
     article = Article(url=url, language='en')
     article.download()
     article.parse()
     return article
 
 def summarize(url):
-    article = download(url)
+    print("Summarizing " + url)
+    article = Article(url=url, language='en')
+    article.download()
+    article.parse()
     article.nlp()
     return article.summary
     
@@ -81,6 +85,9 @@ def parseFacts(url):
     sentenceTriples = {}
     try:
         resultJson = runNLP("tokenize,ssplit,ner,openie", summarize(url))
+        print()
+        print(resultJson)
+        print()
         for sentence in resultJson['sentences']:
             for triple in sentence['openie']:
                 subjectType = sentence['tokens'][triple['subjectSpan'][0]]['ner']
@@ -97,6 +104,8 @@ def parseFacts(url):
                     sentenceTriples[sentence['index']].append(triple)
     except ConnectionError as E:
         print(E)
+    except Exception as E:
+        print("Couldn't parse url:" + url)
     return sentenceTriples
 
 def runNLP(annotators, text):

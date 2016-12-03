@@ -62,6 +62,8 @@ router.get('/', function(req, res) {
           count: tweets.statuses.length,   //how many tweet results
           tweetDictionary: tweetDictionary,  //Dictionary<Tweet,List<string(suggestions)>>
         });
+      }).catch(function(error){
+        console.log("Error: " + error)
       })
     });
 });
