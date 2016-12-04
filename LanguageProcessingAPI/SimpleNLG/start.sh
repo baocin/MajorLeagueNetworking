@@ -1,4 +1,4 @@
 #!/bin/bash
 mvn clean install -DskipTests
-sleep 2
+sleep 1
 mvn exec:java
