@@ -14,7 +14,7 @@ fi
 
 echo "java -mx5g -cp \"*\" edu.stanford.nlp.pipeline.StanfordCoreNLPServer 9000 999999"
 echo "If you get a out of memory error up -mx5g to -mx8g"
-java -mx5g -cp "*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer 9000 999999  > output-nlp.log 2>&1 &
+java -mx5g -cp "*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer 9000 999999 
 
 
 sleep 5
