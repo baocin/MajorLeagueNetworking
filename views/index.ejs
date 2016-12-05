@@ -30,7 +30,6 @@
 	</head>
 	<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top" class="loaded">
 
-
 		<!-- Navigation -->
 		<nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
 			<div class="container">
@@ -60,7 +59,7 @@
 		</nav>
 
 		<!-- Intro Header -->
-		<header class="intro">
+		<header class="intro1">
 			<div class="intro-body">
 				<div class="container">
 					<div class="row">
@@ -108,32 +107,47 @@
 			<!--Commented out for now-->
 			<!--<%- JSON.stringify(tweetResults) %>-->
 		</p>
-		<table class ="table">
-			<tr>
-				<th>Profile Image</th>
-				<th>Tweet!</th>
-				<th># of Retweet</th>
-				<th># of times Favorited</th>
-				<th>Language</th>
-				<th>Profile Friend Count</th>
-			</tr>
-			<% for(var i=0; i < tweetResults.statuses.length; i++) { %>
-			<tr>
-				<td><img src=<%- tweetResults.statuses[i].user.profile_image_url_https %>/></td>
-				<td> <%= tweetResults.statuses[i].text %></td>
-				<td> <%= tweetResults.statuses[i].retweet_count %></td>
-				<td> <%= tweetResults.statuses[i].favorite_count %></td>
-				<td> <%= tweetResults.statuses[i].lang %></td>
-				<td> <%= JSON.stringify(tweetResults.statuses[i].user.friends_count) %></td>
-			</tr>
-			<% } %>
-		</table>
+
+		<div class="flex">
+			<article class="main">
+				<h1><p>BIG IDEA</p></h1>  
+				<aside class="aside aside-1">
+					<div>
+						<table class ="table">
+							<tr>
+								<th>Profile Image</th>
+								<th>Tweet!</th>
+								<th># of Retweet</th>
+								<th># of times Favorited</th>
+								<th>Language</th>
+								<th>Profile Friend Count</th>
+							</tr>
+							<% for(var i=0; i < tweetResults.statuses.length; i++) { %>
+							<tr>
+								<td><img src=<%= tweetResults.statuses[i].user.profile_image_url_https %>></td>
+								<td> <%= tweetResults.statuses[i].text %></td>
+								<td> <%= tweetResults.statuses[i].retweet_count %></td>
+								<td> <%= tweetResults.statuses[i].favorite_count %></td>
+								<td> <%= tweetResults.statuses[i].lang %></td>
+								<td> <%= JSON.stringify(tweetResults.statuses[i].user.friends_count) %></td>
+							</tr>
+							<% } %>
+						</table>
+					</div>
+				</aside>				
+			</article>
+
+			<aside class="aside aside-2">
+				<h1><p>Fun Facts<br>Talking Points</p></h1>
+			</aside>
+		</div>
 		<% } %>
 
-
-
-
-
+		<% if (typeof tweetResults == 'undefined') { %>
+		<!--Commented out for now-->
+		<div class="oops404">
+		</div>
+		<% } %>
 
 		<!-- Footer -->
 		<footer>
@@ -142,18 +156,25 @@
 			</div>
 		</footer>
 
-
-
 		<!-- jQuery -->
 		<script src="vendor/jquery/jquery.js"></script>
 
-
 		<script>
 			$( "form" ).submit(function( event ) {
-				console.log("HI THERE I WORK");
-				$('body').toggleClass('loaded')
-				//event.preventDefault();
+				$('body').toggleClass('loaded')});
+
+
+			$(document).ready(function(){
+				var classCycle=['intro1','intro2','intro3','intro4'];
+
+				var randomNumber = Math.floor(Math.random() * classCycle.length);
+				var classToAdd = classCycle[randomNumber];
+
+				$('header').addClass(classToAdd);
 			});
+
+
+
 		</script>
 
 		<!-- Bootstrap Core JavaScript -->
