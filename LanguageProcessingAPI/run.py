@@ -132,25 +132,25 @@ def parseFacts(url):
                 newSentence = makeSentence(triple['object'], triple['relation'], triple['subject'])
                 readingGradeLevel = textstat.flesch_kincaid_grade(newSentence)
 
-                test_data = newSentence
-                combinedGradeRange = [int(s) for s in re.findall(r'\d+', textstat.text_standard(newSentence)) ]
-                gradeLevel = textstat.flesch_kincaid_grade(newSentence)
+                # test_data = newSentence
+                # combinedGradeRange = [int(s) for s in re.findall(r'\d+', textstat.text_standard(newSentence)) ]
+                # gradeLevel = textstat.flesch_kincaid_grade(newSentence)
                 
-                metrics = [
-                    (textstat.flesch_kincaid_grade(test_data)), #8
-                    (textstat.flesch_reading_ease(test_data)),  #50 good, >60 bad
-                    (textstat.coleman_liau_index(test_data)),   #<15? >20 is bad
-                    (textstat.automated_readability_index(test_data)),  #<12 good, >12 bad
-                    (textstat.dale_chall_readability_score(test_data)), #13 good, 17 bad
-                    (textstat.difficult_words(test_data)),  #4 good, 6 bad
-                    (textstat.linsear_write_formula(test_data)),    #
-                    (textstat.gunning_fog(test_data)),  #28 
-                    combinedGradeRange[0]
-                ]
+                # metrics = [
+                #     (textstat.flesch_kincaid_grade(test_data)), #8
+                #     (textstat.flesch_reading_ease(test_data)),  #50 good, >60 bad
+                #     (textstat.coleman_liau_index(test_data)),   #<15? >20 is bad
+                #     (textstat.automated_readability_index(test_data)),  #<12 good, >12 bad
+                #     (textstat.dale_chall_readability_score(test_data)), #13 good, 17 bad
+                #     (textstat.difficult_words(test_data)),  #4 good, 6 bad
+                #     (textstat.linsear_write_formula(test_data)),    #
+                #     (textstat.gunning_fog(test_data)),  #28 
+                #     combinedGradeRange[0]
+                # ]
                 
-                print(str(metrics))
-                print()
-                if (gradeLevel >= 8):
+                # print(str(metrics))
+                # print()
+                if (readingGradeLevel >= 8):
                     if not triple['subject'] in sentenceDictionary:
                         sentenceDictionary[triple['subject']] = newSentence
                         sentences.append(newSentence)
@@ -169,7 +169,7 @@ def makeSentence(obj, verb, subject):
     
     nlgRequest = requests.get(nlgUrl + '/nlg/makeSentence', params={'subject':subject, 'verb':verb, 'object':obj})
     if (nlgRequest.status_code == requests.codes.ok):
-        print("Sentence Generation Succeeded - " + nlgRequest.text)
+        print("Sentence Generated: " + nlgRequest.text)
         return nlgRequest.text
     return ""
     # lex = EnglishLexicon()
