@@ -48,7 +48,7 @@ router.get('/', function(req, res) {
         //All tweets processed
         allResults.forEach(function(result, index){
           console.log("Done Processing Tweet ID:" + result['tweetId'])
-          tweetDictionary[result.tweetId] = result.suggestionList
+          tweetDictionary[result.tweetId] = JSON.parse(result.suggestionList)
         })
       }).then(function(){
         //DEV: Make sure everthing looks alright
@@ -88,9 +88,12 @@ var extractExpandedUrls = function(tweets){
     for (urlIndex in tweet.entities.urls){
       url = tweet.entities.urls[urlIndex]
       //DEV: The article extractor doesn't work well with twitter itself'
-      //TODO: Check how this works on more websites (make whitelist?)
-      if (url.expanded_url.indexOf('twitter') !== -1){
-        continue;
+      var blackList = ['http://snpy.tv', 'twitter']
+      for (var i = 0; i < blackList.length; i++){
+        //Reject any websites that cannot be processed
+        if (url.expanded_url.indexOf(blackList[i]) !== -1){
+          continue;
+        }
       }
       //Use tweet.text to return the tweet text as well
       tweetUrls.push({'tweetId': tweet.id, 'url': url.expanded_url});

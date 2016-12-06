@@ -1,13 +1,12 @@
 import newspaper
 from newspaper import Article
-import sqlite3
 from flask import Flask
 from flask import request
 app = Flask(__name__)
+
 import re
 import requests
 import json
-from corenlp_pywrap import pywrap as nlpWrap
 from nltk.tokenize import sent_tokenize
 from textstat.textstat import textstat
 # from pynlg.lexicon.en import EnglishLexicon

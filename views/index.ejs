@@ -123,14 +123,21 @@
 								<th>Profile Friend Count</th>
 							</tr>
 							<% for(var i=0; i < tweetResults.statuses.length; i++) { %>
-							<tr>
-								<td><img src=<%= tweetResults.statuses[i].user.profile_image_url_https %>></td>
-								<td> <%= tweetResults.statuses[i].text %></td>
-								<td> <%= tweetResults.statuses[i].retweet_count %></td>
-								<td> <%= tweetResults.statuses[i].favorite_count %></td>
-								<td> <%= tweetResults.statuses[i].lang %></td>
-								<td> <%= JSON.stringify(tweetResults.statuses[i].user.friends_count) %></td>
-							</tr>
+								<style>
+									#<%=tweetResults.statuses[i].id %>{
+										border-color: expression("rgb(" + Math.floor(Math.random() * 255)
+														+ "," + Math.floor(Math.random() * 255) + ","
+														+ Math.floor(Math.random() * 255) + ")");
+									}
+								</style>
+								<tr class=<%=tweetResults.statuses[i].id %>>
+									<td><img src=<%= tweetResults.statuses[i].user.profile_image_url_https %>></td>
+									<td> <%= tweetResults.statuses[i].text %></td>
+									<td> <%= tweetResults.statuses[i].retweet_count %></td>
+									<td> <%= tweetResults.statuses[i].favorite_count %></td>
+									<td> <%= tweetResults.statuses[i].lang %></td>
+									<td> <%= JSON.stringify(tweetResults.statuses[i].user.friends_count) %></td>
+								</tr>
 							<% } %>
 						</table>
 					</div>
@@ -138,7 +145,20 @@
 			</article>
 
 			<aside class="aside aside-2">
-				<h1><p>Fun Facts<br>Talking Points</p></h1>
+				<!--<p>Fun Facts</p>-->
+				<h1><p>Talking Points</p></h1>
+				<% var tweetKeys = Object.keys(tweetDictionary) %>
+				<% for(var i=0; i < tweetKeys.length; i++) { %>
+					<script>console.log("<%= tweetDictionary[tweetKeys[i]] %>")</script>
+					<% for (var tp=0; tp < tweetDictionary[tweetKeys[i]].length; tp++) { %>
+						<script>console.log("<%= tweetDictionary[tweetKeys[i]][tp] %>")</script>
+						<!-- <%=tweetKeys[i]%>-->
+						<p class="talking-point">
+							<%= tweetDictionary[tweetKeys[i]][tp] %>
+						</p>
+					<% } %>
+				<% } %>
+				</div>
 			</aside>
 		</div>
 		<% } %>
