@@ -67,11 +67,16 @@
 							<h1 class="brand-heading">Major League Networking</h1>
 							<p class="intro-text">What would you like to know.</p>
 							<form id="form">
-								<input class = "query" type="text" name="topic"/>
+								<input id="query" class = "query" type="text" name="topic"/>
 								<div>
 									<br><input type="submit">
+									<input type="button"  id="speech-button" onclick="toggleSpeech()">
+									<input type="hidden" name="persist-speech" id="persist-speech" value=0/>
+								</input>
 								</div>
+								
 							</form>
+							
 							<a href="#results" class="btn btn-circle page-scroll">
 								<i class="fa fa-angle-double-down animated"></i>
 							</a>
@@ -180,5 +185,13 @@
 
 		<!-- Theme JavaScript -->
 		<script src="js/grayscale.js"></script>
+
+		
+		<!--Subtle notifications-->
+		<script src="js/notify.js"></script>
+		<!--Needed for Noun Detection-->
+		<script src="js/bundled-pos.js"></script>
+		<!--For Speech Recognition-->
+		<script src="js/speech.js"></script>
 	</body>
 </html>
