@@ -129,19 +129,9 @@ def parseFacts(url):
                         continue
                 except Exception as E:
                     continue
-
-                # objectType = sentence['tokens'][triple['objectSpan'][0]]['ner']
-                # triple['subjectType'] = subjectType
-                # triple['objectType'] = objectType
-
-                # if (subjectType == "PERSON" or subjectType == "ORGANIZATION" and 
-                #     objectType == "PERSON" or objectType == "ORGANIZATION" and
-                #     "'" not in triple['subject']):
-                    #This is a good enough triple to consider
-                    # if sentence['index'] not in sentenceTriples.keys():
-                        # sentenceTriples[sentence['index']] = []
                     
                 newSentence = makeSentence(triple['object'], triple['relation'], triple['subject'])
+                
                 readingGradeLevel = textstat.flesch_kincaid_grade(newSentence)
 
                 # test_data = newSentence
@@ -160,13 +150,10 @@ def parseFacts(url):
                 #     combinedGradeRange[0]
                 # ]
                 
-                # print(str(metrics))
-                # print()
                 if (readingGradeLevel >= 6):
                     if not triple['subject'] in sentenceDictionary:
                         sentenceDictionary[triple['subject']] = newSentence
                         sentences.append(newSentence)
-                #input("")
     except ConnectionError as E:
         print(E)
     # except Exception as E:
