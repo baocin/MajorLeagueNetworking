@@ -210,6 +210,11 @@ a:focus {
     font-size: 26px;
   }
 }
+
+#form {
+  color:black;
+}
+
 .query{
 	width: 300px;
 	height: 25px;
@@ -589,4 +594,19 @@ body {
   .aside-2 {
     order: 3;
   }
+}
+
+.link-unstyled {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+.link-unstyled:link {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+.link-unstyled:hover {
+  color: inherit;
+  text-decoration: inherit;
 }
