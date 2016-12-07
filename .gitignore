@@ -1,6 +1,9 @@
 
 # Created by https://www.gitignore.io/api/node
 
+### IGNORE MODEL FILE ###
+LanguageProcessingAPI/stanford-corenlp-full-2016-10-31/stanford-corenlp-3.7.0-models.jar 
+
 ### IGNORE API KEYS ###
 api_keys.json
 
