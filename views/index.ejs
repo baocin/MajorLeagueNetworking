@@ -123,14 +123,22 @@
 								<th>Profile Friend Count</th>
 							</tr>
 							<% for(var i=0; i < tweetResults.statuses.length; i++) { %>
+							<!--If this tweet has topics colorize its borders-->
+							<script>console.log("VALUE: <%- tweetDictionary[tweetResults.statuses[i].id] %>")</script>
 								<style>
-									#<%=tweetResults.statuses[i].id %>{
-										border-color: expression("rgb(" + Math.floor(Math.random() * 255)
-														+ "," + Math.floor(Math.random() * 255) + ","
-														+ Math.floor(Math.random() * 255) + ")");
+									.A<%=tweetResults.statuses[i].id %>{
+										<% 
+										/*console.log(tweetDictionary)*/
+										var element = tweetDictionary[tweetResults.statuses[i].id]
+										/*console.log("Element: " + element);*/
+										if (typeof element != 'undefined' && element.length > 0) { %>
+											border-color: <%= rainbow(i) %> !important;
+										<% }else{ %>
+											border-color: black !important;
+										<% } %>
 									}
 								</style>
-								<tr class=<%=tweetResults.statuses[i].id %>>
+								<tr class="A<%- tweetResults.statuses[i].id %> tweet">
 									<td><img src=<%= tweetResults.statuses[i].user.profile_image_url_https %>></td>
 									<td> <%= tweetResults.statuses[i].text %></td>
 									<td> <%= tweetResults.statuses[i].retweet_count %></td>
@@ -149,11 +157,8 @@
 				<h1><p>Talking Points</p></h1>
 				<% var tweetKeys = Object.keys(tweetDictionary) %>
 				<% for(var i=0; i < tweetKeys.length; i++) { %>
-					<script>console.log("<%= tweetDictionary[tweetKeys[i]] %>")</script>
 					<% for (var tp=0; tp < tweetDictionary[tweetKeys[i]].length; tp++) { %>
-						<script>console.log("<%= tweetDictionary[tweetKeys[i]][tp] %>")</script>
-						<!-- <%=tweetKeys[i]%>-->
-						<p class="talking-point">
+						<p class="A<%- tweetKeys[i] %> talking-point">
 							<%= tweetDictionary[tweetKeys[i]][tp] %>
 						</p>
 					<% } %>
@@ -213,5 +218,30 @@
 		<script src="js/bundled-pos.js"></script>
 		<!--For Speech Recognition-->
 		<script src="js/speech.js"></script>
+
+		<% 
+		function rainbow(step) {
+			//http://stackoverflow.com/questions/1484506/random-color-generator-in-javascript
+			// This function generates vibrant, "evenly spaced" colours (i.e. no clustering). This is ideal for creating easily distinguishable vibrant markers in Google Maps and other apps.
+			// Adam Cole, 2011-Sept-14
+			// HSV to RBG adapted from: http://mjijackson.com/2008/02/rgb-to-hsl-and-rgb-to-hsv-color-model-conversion-algorithms-in-javascript
+			var numOfSteps = 25;
+			var r, g, b;
+			var h = step / numOfSteps;
+			var i = ~~(h * 6);
+			var f = h * 6 - i;
+			var q = 1 - f;
+			switch(i % 6){
+				case 0: r = 1; g = f; b = 0; break;
+				case 1: r = q; g = 1; b = 0; break;
+				case 2: r = 0; g = 1; b = f; break;
+				case 3: r = 0; g = q; b = 1; break;
+				case 4: r = f; g = 0; b = 1; break;
+				case 5: r = 1; g = 0; b = q; break;
+			}
+			var c = "#" + ("00" + (~ ~(r * 255)).toString(16)).slice(-2) + ("00" + (~ ~(g * 255)).toString(16)).slice(-2) + ("00" + (~ ~(b * 255)).toString(16)).slice(-2);
+			return (c);
+		}
+		%>
 	</body>
 </html>
