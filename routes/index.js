@@ -46,9 +46,14 @@ router.get('/', function(req, res) {
       results = Promise.all(cachedPromises)
       results.then(function(allResults){
         //All tweets processed
+        var uniqueSentences = []
         allResults.forEach(function(result, index){
-          console.log("Done Processing Tweet ID:" + result['tweetId'])
-          tweetDictionary[result.tweetId] = JSON.parse(result.suggestionList)
+          // console.log("Done Processing Tweet ID:" + result['tweetId'])
+          var listOfSentences = JSON.parse(result.suggestionList);
+
+          //Only return new sentences, no repeats
+          tweetDictionary[result.tweetId] = listDiff(uniqueSentences, listOfSentences)
+          uniqueSentences = uniqueSentences.concat(listOfSentences)
         })
       }).then(function(){
         //DEV: Make sure everthing looks alright
@@ -122,5 +127,9 @@ var getTopicSuggestions = function(tweetWithUrl){
     })
   })
 }
+
+var listDiff = function(a, b) {
+    return b.filter(function(i) {return a.indexOf(i) < 0;});
+};
 
 module.exports = router;

@@ -9,6 +9,8 @@ import requests
 import json
 from nltk.tokenize import sent_tokenize
 from textstat.textstat import textstat
+import random
+
 # from pynlg.lexicon.en import EnglishLexicon
 # from pynlg.lexicon.feature.category import NOUN, VERB, DETERMINER
 # from pynlg import make_noun_phrase
@@ -21,6 +23,10 @@ from textstat.textstat import textstat
 #Tag it with Noun Verb Object triples
 nlpUrl = 'http://localhost:9000'
 nlgUrl = 'http://localhost:9090'
+
+#Store recently requested nlp queries
+nlpCache = {}
+nlpCachesToStore = 100
 
 @app.route('/download/text')
 def downloadText():
@@ -103,7 +109,14 @@ def parseFacts(url):
         #"openie.affinity_probability_cap": "0.75",
         # "openie.resolve_coref": "true", 
         #tokenize,ssplit,ner,pos,lemma,depparse,natlog,openie,coref
-        resultJson = runNLP({"annotators": "tokenize,ssplit,ner,openie", "outputFormat": "json"}, downloadText(url))
+        if (url in nlpCache):
+            print("Found", url, " in nlp Cache")
+            sentences = nlpCache[url]
+            return sentences
+
+        articleText = downloadText(url)
+
+        resultJson = runNLP({"annotators": "tokenize,ssplit,ner,openie", "outputFormat": "json"}, articleText)
         # print()
         # print(resultJson)
         # print()
@@ -149,7 +162,7 @@ def parseFacts(url):
                 
                 # print(str(metrics))
                 # print()
-                if (readingGradeLevel >= 8):
+                if (readingGradeLevel >= 6):
                     if not triple['subject'] in sentenceDictionary:
                         sentenceDictionary[triple['subject']] = newSentence
                         sentences.append(newSentence)
@@ -160,6 +173,17 @@ def parseFacts(url):
     #     print(E)
     #     print("Couldn't parse url:" + url)
     #return sentenceTriples
+
+    #attempt to store this query into a cache for later use    
+    print("Storing", url, " in nlp Cache for later use")
+    #if cache is filing up
+    if (len(nlpCache) > nlpCachesToStore):
+        #remove a random element from it
+        nlpCache.pop( random.choice(nlpCache.keys()) )
+
+    #Continue adding the newest query to the cache
+    nlpCache[url] = sentences
+
     return sentences
 
 def makeSentence(obj, verb, subject):

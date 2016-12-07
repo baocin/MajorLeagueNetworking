@@ -546,16 +546,29 @@ body {
 }
 
 .main {
-  text-align: left;
-  background: darkgray;
+  text-align: center;
+  background:rgba(255, 255, 255, 0.1);
 }
 
 .aside-1 {
+  text-align:left;
   background: black;
 }
 
 .aside-2 {
   background: black;
+  max-width:800px;
+}
+
+.tweet {
+  border-right-width: 7px;
+  border-right-style:solid;
+}
+.talking-point {
+  padding-left:1em;
+  border-left-width: 5px;
+  border-left-style:solid;
+  font-size:0.85 em;
 }
 
 @media all and (min-width: 600px) {
