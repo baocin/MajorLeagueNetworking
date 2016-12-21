@@ -3,6 +3,8 @@ Group 18 - BOLT - Senior Software Project
 
 Team Members: Serge Neri, Mosuela Joanne, Darshesh Patel, Michael Pedersen, Shilpa Arora
 
+#### All new development (since 12/06/16) is on the [Bitbucket repo](https://bitbucket.org/ITCS4155-Bolt/majorleaguenetworking) due to Github's LFS(Large File Support) limitations.
+
 # Goal
 Major Leage Networking (MLN) is a small talk aid that helps users immediately engage in conversation about sports.
 Users query MLN in realtime for any sports topic and receive the most relevant talking points for use in small talk interactions.
